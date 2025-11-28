@@ -130,34 +130,54 @@
             left: 0;
             width: 100vw;
             height: 100vh;
+            height: -webkit-fill-available;
             background: #000;
             z-index: 200;
             display: flex;
             justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            align-items: flex-start;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
         #poster-container {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
             position: relative;
+            overflow: hidden;
         }
         #poster-image {
             width: 100%;
             height: 100%;
             object-fit: contain;
             object-position: center;
+            display: block;
         }
-        /* Mobile Portrait - Image fits screen height */
+        /* Mobile Portrait - Show full image */
         @media (max-width: 768px) and (orientation: portrait) {
+            #poster-container {
+                align-items: flex-start;
+                justify-content: center;
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: 120px;
+            }
             #poster-image {
                 width: 100vw;
-                height: 100vh;
-                object-fit: cover;
-                object-position: center;
+                height: auto;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+                max-width: 100%;
+                object-fit: contain;
+                object-position: center top;
+            }
+            #landing-content {
+                top: 45%;
+                transform: translate(-50%, -50%);
+                padding: 15px;
             }
         }
         /* Tablet/Desktop - Black borders on sides */
@@ -185,15 +205,19 @@
         }
         #landing-content {
             position: absolute;
-            top: 50%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 30px;
+            padding: 20px;
             gap: 30px;
             min-width: 300px;
+            pointer-events: none;
+        }
+        #landing-content > * {
+            pointer-events: auto;
         }
         #camera-button {
             width: 80px;
